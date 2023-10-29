@@ -7,7 +7,6 @@ class Auth extends Connection
 {
   public function login($json)
   {
-
     $_responses = new Responses();
     $data = json_decode($json, true);
     if (!isset($data['correo']) || !isset($data['contraseña'])) {
