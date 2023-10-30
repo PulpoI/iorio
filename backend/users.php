@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     http_response_code(200);
   }
 
-
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
   // recibimos los datos enviados
   $postBody = file_get_contents("php://input");

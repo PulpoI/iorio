@@ -78,4 +78,6 @@ class Connection
     return md5($string);
   }
 
+
+
 }

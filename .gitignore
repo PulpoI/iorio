@@ -1,2 +1,4 @@
 backend/class/connection/config
 backend/class/connection/config-prod
+backend/public
+frontend/iorio/node_modules

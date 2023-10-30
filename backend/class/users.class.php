@@ -6,13 +6,12 @@ require_once 'class/responses.class.php';
 class Users extends Connection
 {
   private $table = 'usuario';
-  private $id = "";
+  protected $id = "";
   private $nombre = "";
   private $correo = "";
   private $contraseña = "";
   private $foto_perfil = "";
   private $token = "";
-  // 114271e17dcc61b0cd4fad6ae6d30194
 
   public function userList($page = 1)
   {
@@ -41,35 +40,37 @@ class Users extends Connection
     $_responses = new Responses();
     $data = json_decode($json, true);
 
-    if (!isset($data['token'])) {
-      return $_responses->error_401();
+    // if (!isset($data['token'])) {
+    //   return $_responses->error_401();
+    // } else {
+    //   $this->token = $data['token'];
+    //   $arrayToken = $this->searchToken();
+    //   if ($arrayToken) {
+    if (!isset($data['nombre']) || !isset($data['correo']) || !isset($data['contraseña'])) {
+      return $_responses->error_400();
     } else {
-      $this->token = $data['token'];
-      $arrayToken = $this->searchToken();
-      if ($arrayToken) {
-        if (!isset($data['nombre']) || !isset($data['correo']) || !isset($data['contraseña'])) {
-          return $_responses->error_400();
-        } else {
-          $this->nombre = $data['nombre'];
-          $this->correo = $data['correo'];
-          $this->contraseña = $data['contraseña'];
-          if (isset($data['foto_perfil'])) {
-            $this->foto_perfil = $data['foto_perfil'];
-          }
-          $resp = $this->postQuery();
-          if ($resp) {
-            $response = $_responses->response;
-            $response['result'] = array(
-              "id" => $resp
-            );
-            return $response;
-          } else {
-            return $_responses->error_500();
-          }
-        }
-      } else {
-        return $_responses->error_401("El token enviado es invalido o ha caducado");
+      $this->nombre = $data['nombre'];
+      $this->correo = $data['correo'];
+      $this->contraseña = $data['contraseña'];
+      if (isset($data['foto_perfil'])) {
+        $resp = $this->proccesImage($data['foto_perfil'], "profile");
+        $this->foto_perfil = $resp;
+
       }
+      $resp = $this->postQuery();
+      if ($resp) {
+        $response = $_responses->response;
+        $response['result'] = array(
+          "id" => $resp
+        );
+        return $response;
+      } else {
+        return $_responses->error_500();
+      }
+      //   }
+      // } else {
+      //   return $_responses->error_401("El token enviado es invalido o ha caducado");
+      // }
     }
   }
 
@@ -94,7 +95,7 @@ class Users extends Connection
       return $_responses->error_401();
     } else {
       $this->token = $data['token'];
-      $arrayToken = $this->searchToken();
+      $arrayToken = $this->searchToken($this->token);
       if ($arrayToken) {
         if (!isset($data['id'])) {
           return $_responses->error_400();
@@ -184,9 +185,9 @@ class Users extends Connection
   }
 
   // TOKEN
-  private function searchToken()
+  protected function searchToken($token)
   {
-    $query = "SELECT id, usuario_id, estado FROM usuario_token  WHERE token = '" . $this->token . "' AND estado = 'Activo'";
+    $query = "SELECT id, usuario_id, estado FROM usuario_token  WHERE token = '" . $token . "' AND estado = 'Activo'";
     $data = parent::getData($query);
     if ($data) {
       return $data;
@@ -206,4 +207,18 @@ class Users extends Connection
       return 0;
     }
   }
+  // IMAGE
+  protected function proccesImage($img, $dir)
+  {
+    $direction = dirname(__DIR__) . "/public/images/" . $dir . "/";
+    $parts = explode(";base64,", $img);
+    $extension = explode("/", mime_content_type($img))[1];
+    $image_base64 = base64_decode($parts[1]);
+    $file = $direction . uniqid() . "." . $extension;
+    file_put_contents($file, $image_base64);
+    $file_direction = str_replace('\\', '/', $file);
+
+    return $file_direction;
+  }
+
 }
