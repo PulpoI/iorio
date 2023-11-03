@@ -2,6 +2,7 @@
 
 require_once 'class/connection/connection.php';
 require_once 'class/responses.class.php';
+require_once 'class/auth.class.php';
 
 class Users extends Connection
 {
@@ -40,40 +41,49 @@ class Users extends Connection
     $_responses = new Responses();
     $data = json_decode($json, true);
 
-    // if (!isset($data['token'])) {
-    //   return $_responses->error_401();
-    // } else {
-    //   $this->token = $data['token'];
-    //   $arrayToken = $this->searchToken();
-    //   if ($arrayToken) {
     if (!isset($data['nombre']) || !isset($data['correo']) || !isset($data['contraseña'])) {
       return $_responses->error_400();
     } else {
-      $this->nombre = $data['nombre'];
-      $this->correo = $data['correo'];
-      $this->contraseña = $data['contraseña'];
-      if (isset($data['foto_perfil'])) {
-        $resp = $this->proccesImage($data['foto_perfil'], "profile");
-        $this->foto_perfil = $resp;
-
-      }
-      $resp = $this->postQuery();
-      if ($resp) {
-        $response = $_responses->response;
-        $response['result'] = array(
-          "id" => $resp
-        );
-        return $response;
+      if ($this->searchEmail($data['correo']) > 0) {
+        return $_responses->error_401("El correo ya existe");
       } else {
-        return $_responses->error_500();
+        $this->nombre = $data['nombre'];
+        $this->correo = $data['correo'];
+        $this->contraseña = parent::encrypt($data['contraseña']);
+        // $pasword_encripted = $data['contraseña'];
+        // $this->contraseña = $data['contraseña'];
+        if (isset($data['foto_perfil'])) {
+          $resp = $this->proccesImage($data['foto_perfil'], "profile");
+          $this->foto_perfil = $resp;
+
+        }
+        $resp = $this->postQuery();
+        if ($resp) {
+          $token = $this->insertToken($resp);
+          $response = $_responses->response;
+          $response['result'] = array(
+            "id" => $resp,
+            "token" => $token
+
+          );
+          return $response;
+        } else {
+          return $_responses->error_500();
+        }
       }
-      //   }
-      // } else {
-      //   return $_responses->error_401("El token enviado es invalido o ha caducado");
-      // }
     }
   }
 
+  private function searchEmail($email)
+  {
+    $query = "SELECT id FROM " . $this->table . " WHERE correo = '" . $email . "'";
+    $data = parent::getData($query);
+    if ($data) {
+      return $data;
+    } else {
+      return 0;
+    }
+  }
   private function postQuery()
   {
     $query = "INSERT INTO " . $this->table . " (nombre, correo, contraseña, foto_perfil) 
@@ -85,6 +95,21 @@ class Users extends Connection
       return 0;
     }
   }
+  private function insertToken($userId)
+  {
+    $val = true;
+    $token = bin2hex(openssl_random_pseudo_bytes(16, $val));
+    $date = date("Y-m-d H:i");
+    $status = "Activo";
+    $query = "INSERT INTO usuario_token (usuario_id, token, estado, fecha) VALUES ('$userId', '$token', '$status', '$date')";
+    $verify = parent::nonQuery($query);
+    if ($verify) {
+      return $token;
+    } else {
+      return 0;
+    }
+  }
+
 
   // PUT
   public function putUser($json)

@@ -3,6 +3,8 @@ import { Apiurl } from "../services/apirest";
 import React, { useState } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   interface FormState {
     correo: string;
     contraseña: string;
@@ -20,8 +22,6 @@ const Login = () => {
     error: false,
     errorMsg: "",
   });
-
-  const navigate = useNavigate();
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -63,7 +63,7 @@ const Login = () => {
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            Inicia sesión en tu cuenta
           </h2>
         </div>
 
