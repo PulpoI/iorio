@@ -19,11 +19,18 @@ class Auth extends Connection
       if ($data) {
         if ($password == $data[0]['contraseña']) {
           // Crear token
-          $verify = $this->insertToken($data[0]['id']);
-          if ($verify) {
+          $token = $this->insertToken($data[0]['id']);
+          if ($token) {
+            // set cookie in the navegator
+            // $setCookie = setcookie("token", $token, time() + (86400 * 30), "/", "localhost:5173", false, true);
             $result = $_responses->response;
             $result['result'] = array(
-              "token" => $verify
+              "id" => $data[0]['id'],
+              "token" => $token,
+              "correo" => $email,
+              "nombre" => $data[0]['nombre'],
+              "foto_perfil" => $data[0]["foto_perfil"],
+              "es_admin" => $data[0]["es_admin"],
             );
             return $result;
           } else {
@@ -40,7 +47,7 @@ class Auth extends Connection
 
   private function getUserData($email)
   {
-    $query = "SELECT id, contraseña FROM usuario WHERE correo = '$email'";
+    $query = "SELECT id, contraseña, nombre, foto_perfil, es_admin FROM usuario WHERE correo = '$email'";
     $data = parent::getData($query);
     if (isset($data[0]['id'])) {
       return $data;

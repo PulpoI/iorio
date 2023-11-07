@@ -4,4 +4,5 @@ export interface AuthContextValue {
   user: object | null;
   isAuthenticated: boolean;
   errors: string[];
+  loading: boolean;
 }

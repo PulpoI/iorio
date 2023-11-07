@@ -11,3 +11,9 @@ export const loginRequest = (user: object) =>
     method: "POST",
     body: JSON.stringify(user),
   }).then((res) => res.json());
+
+export const verifyTokenRequest = (token: string) =>
+  fetch(API + "verify-token", {
+    method: "POST",
+    body: JSON.stringify({ token }),
+  }).then((res) => res.json());
