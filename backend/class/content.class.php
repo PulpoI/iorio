@@ -37,6 +37,13 @@ class Content extends Users
     return $data;
   }
 
+  public function getContentUser($id)
+  {
+    $query = "SELECT id, usuario_id, categoria_id, titulo, descripcion, tipo_contenido, contenido, estado, fecha_subida FROM " . $this->table . " WHERE usuario_id = $id";
+    $data = parent::getData($query);
+    return $data;
+  }
+
   // POST
   public function postContent($json)
   {
@@ -49,6 +56,7 @@ class Content extends Users
       $this->token = $data['token'];
       $arrayToken = $this->searchToken($this->token);
       if ($arrayToken) {
+        // if (!isset($data['usuario_id']) || !isset($data['categoria_id']) || !isset($data['tipo_contenido']) || !isset($data['contenido']) || !isset($data['estado'])) {
         if (!isset($data['usuario_id']) || !isset($data['categoria_id']) || !isset($data['tipo_contenido']) || !isset($data['contenido']) || !isset($data['estado'])) {
           return $_responses->error_400();
         } else {

@@ -19,6 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     header('Content-Type: application/json');
     echo json_encode($contentData);
     http_response_code(200);
+  } else if (isset($_GET['user_id'])) {
+    $userId = $_GET['user_id'];
+    $contentData = $_content->getContentUser($userId);
+    header('Content-Type: application/json');
+    echo json_encode($contentData);
+    http_response_code(200);
+  } else {
+    $_responses->error_400();
   }
 
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {

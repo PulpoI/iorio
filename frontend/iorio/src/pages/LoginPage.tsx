@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const {
@@ -9,7 +10,14 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  const { signin, errors: signinErrors } = useAuth();
+  const { signin, errors: signinErrors, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/mis-posts");
+    }
+  }, [isAuthenticated, navigate]);
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
