@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $dataArray = $_auth->login($postBody);
 
   // Devolver respuesta
+  header('Access-Control-Allow-Origin: *');
+  header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+  header("Access-Control-Allow-Methods: POST");
+  header("Allow:  POST");
   header('Content-Type: application/json');
   if (isset($dataArray['result']['error_id'])) {
     $responseCode = $dataArray['result']['error_id'];

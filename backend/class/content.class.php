@@ -140,8 +140,6 @@ class Content extends Users
 
     }
   }
-
-
   private function deleteQuery() {
     $query = "DELETE FROM " . $this->table . " WHERE id = '" . $this->id . "'";
     $data = parent::nonQuery($query);

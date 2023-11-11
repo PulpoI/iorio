@@ -10,6 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   if (isset($_GET['page'])) {
     $page = $_GET['page'];
     $userList = $_users->userList($page);
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+    header("Access-Control-Allow-Methods: GET");
+    header("Allow:  GET");
     header('Content-Type: application/json');
     echo json_encode($userList);
     http_response_code(200);
@@ -27,6 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   // enviamos los datos a procesar
   $dataArray = $_users->postUser($postBody);
   // Devolver respuesta
+  header('Access-Control-Allow-Origin: *');
+  header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+  header("Access-Control-Allow-Methods: POST");
+  header("Allow:  POST");
   header('Content-Type: application/json');
   if (isset($dataArray['result']['error_id'])) {
     $responseCode = $dataArray['result']['error_id'];
@@ -41,6 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $postBody = file_get_contents("php://input");
   // enviamos los datos al manejador
   $dataArray = $_users->putUser($postBody);
+  header('Access-Control-Allow-Origin: *');
+  header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+  header("Access-Control-Allow-Methods: PUT");
+  header("Allow:  PUT");
   header('Content-Type: application/json');
   if (isset($dataArray['result']['error_id'])) {
     $responseCode = $dataArray['result']['error_id'];
@@ -65,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
   // enviamos los datos al manejador
   $dataArray = $_users->deleteUser($postBody);
+  header('Access-Control-Allow-Origin: *');
+  header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+  header("Access-Control-Allow-Methods: DELETE");
+  header("Allow:  DELETE");
   header('Content-Type: application/json');
   if (isset($dataArray['result']['error_id'])) {
     $responseCode = $dataArray['result']['error_id'];
