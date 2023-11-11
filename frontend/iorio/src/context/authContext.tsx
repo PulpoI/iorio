@@ -78,11 +78,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       const res = await updateToken(Cookies.get("user") as string);
-      if (res) {
-        Cookies.remove("user");
-        setUser(null);
-        setIsAuthenticated(false);
-      }
+      Cookies.remove("user");
+      setUser(null);
+      setIsAuthenticated(false);
     } catch {
       Cookies.remove("user");
       setUser(null);

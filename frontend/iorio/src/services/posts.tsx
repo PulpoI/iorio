@@ -34,7 +34,7 @@ export const deletePostsRequest = (id, userId, token) => {
     method: "DELETE",
     body: JSON.stringify(data),
   }).then((res) => {
-    res.status;
+    return res;
   });
 };
 // fetch(API + `/content/${id}`, {

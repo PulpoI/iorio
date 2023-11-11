@@ -10,7 +10,6 @@ const PostCard = ({ post }) => {
           <button
             onClick={() => {
               deletePost(post.id);
-              // console.log(post.id);
             }}
           >
             Eliminar

@@ -13,4 +13,5 @@ export interface PostContextValue {
   createPost: (post: object) => Promise<void>;
   getPostsUser: () => Promise<void>;
   getPosts: () => Promise<void>;
+  deletePost: (id: string) => Promise<void>;
 }
