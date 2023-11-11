@@ -40,5 +40,17 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     http_response_code(200);
   }
   echo json_encode($dataArray);
+} else if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
+  $deleteBody = file_get_contents("php://input");
+  $dataArray = $_content->deleteContent($deleteBody);
+  header('Content-Type: application/json');
+  if (isset($dataArray['result']['error_id'])) {
+    $responseCode = $dataArray['result']['error_id'];
+    http_response_code($responseCode);
+  } else {
+    http_response_code(200);
+  }
 
+} else {
+  $_responses->error_405();
 }

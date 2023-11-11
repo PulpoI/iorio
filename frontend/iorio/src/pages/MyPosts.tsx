@@ -1,9 +1,9 @@
+import PostCard from "../components/PostCard";
 import { usePosts } from "../context/PostsContext";
 import { useEffect } from "react";
 
 const MyPosts = () => {
   const { getPostsUser, posts } = usePosts();
-  console.log(posts);
 
   useEffect(() => {
     getPostsUser();
@@ -16,12 +16,11 @@ const MyPosts = () => {
   return (
     <div>
       <h1>Mis posts</h1>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <h2>{post.titulo}</h2>
-          <p>{post.descripcion}</p>
-        </div>
-      ))}
+      <div className="grid grid-cols-3 gap-2">
+        {posts.map((post) => (
+          <PostCard post={post} key={post.id} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -111,5 +111,44 @@ class Content extends Users
   }
 
 
+  // DELETE 
+  public function deleteContent($id) {
+    $_responses = new Responses();
+    $data = json_decode($id, true);
+    if (!isset($data['token'])) {
+      return $_responses->error_401();
+    } else {
+      $token = $data['token'];
+      $arrayToken = $this->searchToken($token);
+      if ($arrayToken[0]['usuario_id'] == $data['usuario_id']) {
+        $this->id = $data['id'];
+        $resp = $this->deleteQuery();
+        if ($resp) {
+          $response = $_responses->response;
+          $response['result'] = array(
+            "id" => $this->id
+          );
+          return $response;
+        } else {
+          return $_responses->error_500();
+        }
 
+      } else {
+        return $_responses->error_401("El token enviado es invalido o ha caducado");
+      }
+
+
+    }
+  }
+
+
+  private function deleteQuery() {
+    $query = "DELETE FROM " . $this->table . " WHERE id = '" . $this->id . "'";
+    $data = parent::nonQuery($query);
+    if ($data >= 1) {
+      return $data;
+    } else {
+      return 0;
+    }
+  }
 }

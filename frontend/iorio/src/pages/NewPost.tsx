@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form";
 import { usePosts } from "../context/PostsContext";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const NewPost = () => {
   const { register, handleSubmit } = useForm();
   const { posts, createPost } = usePosts();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
     data.token = Cookies.get("user");
@@ -19,6 +21,7 @@ const NewPost = () => {
     console.log(data);
 
     createPost(data);
+    navigate("/mis-posts");
   });
 
   useForm();

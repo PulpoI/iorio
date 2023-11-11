@@ -24,9 +24,20 @@ export const updatePostsRequest = (post) => {
   }).then((res) => res.json());
 };
 
-export const deletePostsRequest = (id) => {
-  fetch(API + `/content/${id}`, {
+export const deletePostsRequest = (id, userId, token) => {
+  const data = {
+    id: id,
+    token: token,
+    usuario_id: userId,
+  };
+  fetch(API + `/content`, {
     method: "DELETE",
-    body: JSON.stringify(id),
-  }).then((res) => res.json());
+    body: JSON.stringify(data),
+  }).then((res) => {
+    res.status;
+  });
 };
+// fetch(API + `/content/${id}`, {
+//   method: "DELETE",
+//   body: JSON.stringify(id, userId, token),
+// }).then((res) => res.json());

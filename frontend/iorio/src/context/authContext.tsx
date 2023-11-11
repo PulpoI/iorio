@@ -9,6 +9,7 @@ import {
   registerRequest,
   loginRequest,
   verifyTokenRequest,
+  updateToken,
 } from "../services/auth";
 import { AuthContextValue } from "./types";
 import Cookies from "js-cookie";
@@ -17,6 +18,7 @@ import Cookies from "js-cookie";
 export const AuthContext = createContext<AuthContextValue>({
   signup: async () => {},
   signin: async () => {},
+  logout: () => {},
   user: null,
   isAuthenticated: false,
   errors: [],
@@ -73,6 +75,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const logout = async () => {
+    try {
+      const res = await updateToken(Cookies.get("user") as string);
+      if (res) {
+        Cookies.remove("user");
+        setUser(null);
+        setIsAuthenticated(false);
+      }
+    } catch {
+      Cookies.remove("user");
+      setUser(null);
+      setIsAuthenticated(false);
+    }
+  };
+
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -114,6 +131,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const contextValue: AuthContextValue = {
     signup,
     signin,
+    logout,
     loading,
     user,
     isAuthenticated,

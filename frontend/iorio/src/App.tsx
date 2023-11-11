@@ -9,24 +9,28 @@ import NewPost from "./pages/NewPost";
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <AuthProvider>
       <PostProvider>
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/registro" element={<RegisterPage />} />
+          <Navbar />
+          <main className="container mx-auto px-10">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/registro" element={<RegisterPage />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="/mis-posts" element={<MyPosts />} />
-              <Route path="/mis-posts/:id" element={<MyPosts />} />
-              <Route path="/agregar-post" element={<NewPost />} />
-              <Route path="/perfil" element={<ProfilePage />} />
-            </Route>
-          </Routes>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/mis-posts" element={<MyPosts />} />
+                <Route path="/mis-posts/:id" element={<MyPosts />} />
+                <Route path="/agregar-post" element={<NewPost />} />
+                <Route path="/perfil" element={<ProfilePage />} />
+              </Route>
+            </Routes>
+          </main>
         </BrowserRouter>
       </PostProvider>
     </AuthProvider>

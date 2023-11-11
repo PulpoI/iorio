@@ -1,12 +1,18 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 import { PostContextValue } from "./types";
-import { createtPostsRequest, getPostsUserRequest } from "../services/posts";
+import {
+  createtPostsRequest,
+  deletePostsRequest,
+  getPostsUserRequest,
+} from "../services/posts";
 import { useAuth } from "./AuthContext";
+import Cookies from "js-cookie";
 
 const PostContext = createContext<PostContextValue>({
   posts: [],
   createPost: async () => {},
   getPostsUser: async () => {},
+  deletePost: async () => {},
 });
 
 export const usePosts = () => {
@@ -43,10 +49,21 @@ export const PostProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const deletePost = async (id: string) => {
+    try {
+      const token = await Cookies.get("user");
+      const res = await deletePostsRequest(id, user.id, token);
+      setPosts(posts.filter((post) => post.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const contextValue: PostContextValue = {
     posts,
     createPost,
     getPostsUser,
+    deletePost,
   };
   return (
     <PostContext.Provider value={contextValue}>{children}</PostContext.Provider>

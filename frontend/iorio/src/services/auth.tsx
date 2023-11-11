@@ -17,3 +17,13 @@ export const verifyTokenRequest = (token: string) =>
     method: "POST",
     body: JSON.stringify({ token }),
   }).then((res) => res.json());
+
+export const updateToken = (token: string) =>
+  fetch(API + "/verify-token", {
+    method: "PUT",
+    body: JSON.stringify({ token }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+    });
