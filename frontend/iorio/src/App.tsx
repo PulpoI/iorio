@@ -10,30 +10,33 @@ import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "./components/Navbar";
+import { VideoHeightProvider } from "./context/VideoHeightContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <PostProvider>
-        <BrowserRouter>
-          <Navbar />
-          <main className="container mx-auto px-10">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/registro" element={<RegisterPage />} />
+    <VideoHeightProvider>
+      <AuthProvider>
+        <PostProvider>
+          <BrowserRouter>
+            <Navbar />
+            <main className="">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/registro" element={<RegisterPage />} />
 
-              <Route element={<ProtectedRoute />}>
-                <Route path="/mis-posts" element={<MyPosts />} />
-                <Route path="/mis-posts/:id" element={<MyPosts />} />
-                <Route path="/agregar-post" element={<NewPost />} />
-                <Route path="/perfil" element={<ProfilePage />} />
-              </Route>
-            </Routes>
-          </main>
-        </BrowserRouter>
-      </PostProvider>
-    </AuthProvider>
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/mis-posts" element={<MyPosts />} />
+                  <Route path="/mis-posts/:id" element={<NewPost />} />
+                  <Route path="/agregar-post" element={<NewPost />} />
+                  <Route path="/perfil" element={<ProfilePage />} />
+                </Route>
+              </Routes>
+            </main>
+          </BrowserRouter>
+        </PostProvider>
+      </AuthProvider>
+    </VideoHeightProvider>
   );
 }
 

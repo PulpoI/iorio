@@ -33,3 +33,4 @@ Hero:
 ### Funciones extras:
 
 - "Me gusta" en posts (Esto puede servir para ordenar contenido con mas relevancia)
+- "Canciones + votadas para reproducirse al navegar la web"

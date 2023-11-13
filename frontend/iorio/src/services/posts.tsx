@@ -1,10 +1,15 @@
 import { API } from "./apirest";
 
-export const getPostRequest = (id) => {
-  fetch(API + `/content/${id}`, {
-    method: "GET",
-    body: JSON.stringify(id),
-  }).then((res) => res.json());
+export const getPostRequest = async (id) => {
+  try {
+    const response = await fetch(API + `/content?id=${id}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch data");
+  }
 };
 
 export const getPostsUserRequest = (id) =>
@@ -17,11 +22,15 @@ export const createtPostsRequest = (post) => {
   }).then((res) => res.json());
 };
 
-export const updatePostsRequest = (post) => {
-  fetch(API + `/content/${post.id}`, {
-    method: "PUT",
-    body: JSON.stringify(user),
-  }).then((res) => res.json());
+export const updatePostsRequest = async (post) => {
+  try {
+    await fetch(API + `/content`, {
+      method: "PUT",
+      body: JSON.stringify(post),
+    }).then((res) => console.log(res));
+  } catch (error) {
+    throw new Error("Failed to fetch data");
+  }
 };
 
 export const deletePostsRequest = (id, userId, token) => {

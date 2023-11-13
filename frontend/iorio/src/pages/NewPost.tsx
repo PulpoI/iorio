@@ -2,25 +2,49 @@ import { useForm } from "react-hook-form";
 import { usePosts } from "../context/PostsContext";
 import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const NewPost = () => {
-  const { register, handleSubmit } = useForm();
-  const { posts, createPost } = usePosts();
+  const { register, handleSubmit, setValue } = useForm();
+  const { posts, createPost, getPost, updatePost } = usePosts();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    async function loadPost() {
+      if (params.id) {
+        const post = await getPost(params.id);
+        setValue("id", post.id);
+        setValue("titulo", post.titulo);
+        setValue("descripcion", post.descripcion);
+        setValue("usuario_id", post.usuario_id);
+        setValue("categoria_id", post.categoria_id);
+        setValue("estado", post.estado);
+        setValue("contenido", post.contenido);
+        setValue("tipo_contenido", post.tipo_contenido);
+        setValue("fecha_subida", post.fecha_subida);
+      }
+    }
+    loadPost();
+  }, []);
 
   const onSubmit = handleSubmit((data) => {
-    data.token = Cookies.get("user");
-    data.usuario_id = user.id;
-    data.categoria_id = "3";
-    data.tipo_contenido = "texto";
-    data.estado = "pendiente";
-    data.contenido = "";
-
-    console.log(data);
-
-    createPost(data);
+    if (params.id) {
+      data.token = Cookies.get("user");
+      console.log(data);
+      updatePost(data);
+    } else {
+      data.token = Cookies.get("user");
+      data.usuario_id = user.id;
+      data.categoria_id = "3";
+      data.tipo_contenido = "texto";
+      data.estado = "pendiente";
+      data.contenido = "";
+      data.tipo_contenido = "";
+      createPost(data);
+    }
     navigate("/mis-posts");
   });
 

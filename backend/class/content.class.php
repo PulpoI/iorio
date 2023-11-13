@@ -112,7 +112,8 @@ class Content extends Users
 
 
   // DELETE 
-  public function deleteContent($id) {
+  public function deleteContent($id)
+  {
     $_responses = new Responses();
     $data = json_decode($id, true);
     if (!isset($data['token'])) {
@@ -140,7 +141,8 @@ class Content extends Users
 
     }
   }
-  private function deleteQuery() {
+  private function deleteQuery()
+  {
     $query = "DELETE FROM " . $this->table . " WHERE id = '" . $this->id . "'";
     $data = parent::nonQuery($query);
     if ($data >= 1) {
@@ -149,4 +151,53 @@ class Content extends Users
       return 0;
     }
   }
+
+  // PUT
+  public function updateContent($json)
+  {
+    $_responses = new Responses();
+    $data = json_decode($json, true);
+    if (!isset($data['token'])) {
+      return $_responses->error_401();
+    } else {
+      $token = $data['token'];
+      $arrayToken = $this->searchToken($token);
+      if ($arrayToken[0]['usuario_id'] == $data['usuario_id']) {
+        $this->id = $data['id'];
+        $this->usuario_id = $data['usuario_id'];
+        $this->categoria_id = $data['categoria_id'];
+        $this->titulo = $data['titulo'];
+        $this->descripcion = $data['descripcion'];
+        $this->tipo_contenido = $data['tipo_contenido'];
+        $this->contenido = $data['contenido'];
+        $this->estado = $data['estado'];
+        $this->fecha_subida = date("Y-m-d H:i");
+        $resp = $this->updateQuery();
+        if ($resp) {
+          $response = $_responses->response;
+          $response['result'] = array(
+            "id" => $this->id
+          );
+          return $response;
+        } else {
+          return $_responses->error_500();
+        }
+
+      } else {
+        return $_responses->error_401("El token enviado es invalido o ha caducado");
+      }
+    }
+  }
+
+  private function updateQuery()
+  {
+    $query = "UPDATE " . $this->table . " SET usuario_id = '" . $this->usuario_id . "', categoria_id = '" . $this->categoria_id . "', titulo = '" . $this->titulo . "', descripcion = '" . $this->descripcion . "', tipo_contenido = '" . $this->tipo_contenido . "', contenido = '" . $this->contenido . "', estado = '" . $this->estado . "', fecha_subida = '" . $this->fecha_subida . "' WHERE id = '" . $this->id . "'";
+    $data = parent::nonQuery($query);
+    if ($data >= 1) {
+      return $data;
+    } else {
+      return 0;
+    }
+  }
 }
+

@@ -4,6 +4,8 @@ import {
   createtPostsRequest,
   deletePostsRequest,
   getPostsUserRequest,
+  getPostRequest,
+  updatePostsRequest,
 } from "../services/posts";
 import { useAuth } from "./AuthContext";
 import Cookies from "js-cookie";
@@ -13,6 +15,7 @@ const PostContext = createContext<PostContextValue>({
   createPost: async () => {},
   getPostsUser: async () => {},
   deletePost: async () => {},
+  getPost: async () => {},
 });
 
 export const usePosts = () => {
@@ -59,11 +62,32 @@ export const PostProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const getPost = async (id: string) => {
+    try {
+      const res = await getPostRequest(id);
+      return res[0]; // O podrías devolver res para usarlo en otro lugar
+    } catch (error) {
+      console.log(error); // Manejar el error, mostrar un mensaje, etc.
+      // Puedes lanzar el error nuevamente para manejarlo en un nivel superior si es necesario
+      throw new Error("Error fetching post");
+    }
+  };
+
+  const updatePost = async (post: object) => {
+    try {
+      await updatePostsRequest(post);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const contextValue: PostContextValue = {
     posts,
     createPost,
     getPostsUser,
     deletePost,
+    getPost,
+    updatePost,
   };
   return (
     <PostContext.Provider value={contextValue}>{children}</PostContext.Provider>

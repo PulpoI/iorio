@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
+      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md mx-auto px-10">
         {signinErrors.length > 0 && (
           <div className="bg-red-500 p-2 text-white text-center">
             {signinErrors}

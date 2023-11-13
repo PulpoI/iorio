@@ -14,4 +14,11 @@ export interface PostContextValue {
   getPostsUser: () => Promise<void>;
   getPosts: () => Promise<void>;
   deletePost: (id: string) => Promise<void>;
+  getPost: (id: string) => Promise<void>;
+}
+
+
+export interface VideoHeightContextValue {
+  videoHeight: number;
+  setVideoHeight: (height: number) => void;
 }

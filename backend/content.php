@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
 } else if ($_SERVER['REQUEST_METHOD'] == "PUT") {
   $putBody = file_get_contents("php://input");
-  $dataArray = $_content->putContent($putBody);
+  $dataArray = $_content->updateContent($putBody);
   header('Access-Control-Allow-Origin: *');
   header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
   header("Access-Control-Allow-Methods: PUT");
