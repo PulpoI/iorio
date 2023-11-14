@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { usePosts } from "../context/PostsContext";
+import { useEffect, useState } from "react";
 
 const PostCard = ({ post }) => {
   const { deletePost } = usePosts();
-
   const navigate = useNavigate();
+
+  const [urlImage, setUrlImage] = useState("");
+  useEffect(() => {
+    setUrlImage(post.contenido.replace("I:/DW FRONTEND/", "http://localhost/"));
+  }, [post]);
 
   return (
     <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
@@ -27,6 +32,7 @@ const PostCard = ({ post }) => {
           </button>
         </div>
       </div>
+      <img src={urlImage} alt="imagen" className="rounded-md w-full my-5" />
       <p className="text-slate-300">{post.descripcion}</p>
       <p> {new Date(post.fecha_subida).toLocaleDateString()} </p>
     </div>

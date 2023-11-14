@@ -3,8 +3,6 @@ import { useVideoHeight } from "../context/VideoHeightContext";
 const HomePage = () => {
   const { videoHeight } = useVideoHeight();
 
-  console.log(videoHeight);
-
   return (
     <>
       <section

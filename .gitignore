@@ -2,6 +2,6 @@ backend/class/connection/config
 backend/class/connection/config-prod
 backend/public
 
-frontend/iorio/public
-frontend/iorio/node_modules
+iorio/public
+iorio/node_modules
 node_modules

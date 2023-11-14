@@ -39,14 +39,23 @@ const NewPost = () => {
       data.token = Cookies.get("user");
       data.usuario_id = user.id;
       data.categoria_id = "3";
-      data.tipo_contenido = "texto";
+      data.tipo_contenido = "fotografia";
       data.estado = "pendiente";
-      data.contenido = "";
-      data.tipo_contenido = "";
+      // data.contenido = "";
       createPost(data);
     }
     navigate("/mis-posts");
   });
+
+  const convertToBase64 = (files) => {
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setValue("contenido", reader.result);
+      };
+    });
+  };
 
   useForm();
   return (
@@ -59,6 +68,14 @@ const NewPost = () => {
           autoFocus
           className="w-full mb-4 h-10 px-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500"
         />
+
+        <input
+          type="file"
+          name="image"
+          id="image"
+          onChange={(e) => convertToBase64(e.target.files)}
+        />
+
         <textarea
           rows={3}
           placeholder="Descripción"
