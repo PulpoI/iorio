@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/img/logo.jpg";
+import imgHero from "../assets/img/hero-7.jpg";
 
 const Navbar = () => {
   const videoHero = "../../public/donde-naci-alta.mp4";
@@ -28,9 +30,15 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-zinc-700 flex justify-between py-5 px-10 rounded-lg">
+      <button
+        className="in z-10 fixed right-0 bottom-0  text-white bg-gray-900 px-6 py-2"
+        onClick={() => handleSoundVideo()}
+      >
+        Activar/Desactivar sonido
+      </button>
+      <nav className="bg-black flex justify-between items-center px-10 absolute top-0 z-10 w-full">
         <Link to="/">
-          <h1 className="text-2xl font-bold">Iorio</h1>
+          <img src={logo} alt="" className="w-56" />
         </Link>
         <ul className="flex gap-x-2">
           {isAuthenticated ? (
@@ -39,7 +47,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/mis-posts"
-                  className="bg-indigo-500 px-4 py-1 rounder-sm"
+                  className="bg-yellow-500 px-4 py-1 rounder-sm"
                 >
                   Mis Posts
                 </Link>
@@ -47,7 +55,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/agregar-post"
-                  className="bg-indigo-500 px-4 py-1 rounder-sm"
+                  className="bg bg-yellow-500 px-4 py-1 rounder-sm"
                 >
                   Agregar Post
                 </Link>
@@ -68,7 +76,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/login"
-                  className="bg-indigo-500 px-4 py-1 rounder-sm"
+                  className="bg bg-yellow-500 flex justify-center w-24 py-1 rounded-md"
                 >
                   Login
                 </Link>
@@ -76,7 +84,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/registro"
-                  className="bg-indigo-500 px-4 py-1 rounder-sm"
+                  className="bg bg-yellow-500 flex justify-center w-24 py-1 rounded-md "
                 >
                   Registro
                 </Link>
@@ -85,19 +93,28 @@ const Navbar = () => {
           )}
         </ul>
       </nav>
-      <section className="overflow-hidden ">
+
+      <section
+        className="bg-cover bg-top bg-fixed overflow-hidden"
+        // style={{ marginTop: `${videoHeight + 72}px` }}
+        // style={{ backgroundImage: `url(${imgHero})` }}
+      >
+        <div className="flex justify-center bg-slate-950 bg-opacity-80 h-0">
+          <div
+            className="w-full absolute h-screen bg-cover bg-top bg-fixed"
+            style={{ backgroundImage: `url(${imgHero})` }}
+          ></div>
+        </div>
+      </section>
+
+      {/* Video */}
+      {/* <section className="overflow-hidden ">
         <div className="w-screen opacity-80 h-0">
           <video className="w-screen absolute" loop autoPlay muted>
             <source src={videoHero} type="video/mp4"></source>
           </video>
-          <button
-            className="in z-10 fixed right-0 bottom-0  text-white bg-gray-900 px-6 py-2"
-            onClick={() => handleSoundVideo()}
-          >
-            Activar/Desactivar sonido
-          </button>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

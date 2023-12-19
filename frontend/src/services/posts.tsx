@@ -1,5 +1,7 @@
 import { API } from "./apirest";
 
+// User
+
 export const getPostRequest = async (id) => {
   try {
     const response = await fetch(API + `/content?id=${id}`, {
@@ -50,3 +52,17 @@ export const deletePostsRequest = (id, userId, token) => {
 //   method: "DELETE",
 //   body: JSON.stringify(id, userId, token),
 // }).then((res) => res.json());
+
+// Visitor
+
+export const getPostsRequest = async () => {
+  try {
+    const response = await fetch(API + "/content?page=1", {
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch data");
+  }
+};

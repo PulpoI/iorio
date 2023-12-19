@@ -6,11 +6,13 @@ import {
   getPostsUserRequest,
   getPostRequest,
   updatePostsRequest,
+  getPostsRequest,
 } from "../services/posts";
 import { useAuth } from "./AuthContext";
 import Cookies from "js-cookie";
 
 const PostContext = createContext<PostContextValue>({
+  allPosts: [],
   posts: [],
   createPost: async () => {},
   getPostsUser: async () => {},
@@ -34,6 +36,7 @@ interface AuthProviderProps {
 
 export const PostProvider = ({ children }: AuthProviderProps) => {
   const [posts, setPosts] = useState<object[]>([]);
+  const [allPosts, setAllPosts] = useState<object[]>([]); // [1]
   const { user } = useAuth();
 
   const createPost = async (post: object) => {
@@ -81,6 +84,16 @@ export const PostProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  // Visitor
+
+  const getPosts = async () => {
+    try {
+      const res = await getPostsRequest();
+      setAllPosts(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const contextValue: PostContextValue = {
     posts,
     createPost,
@@ -88,6 +101,8 @@ export const PostProvider = ({ children }: AuthProviderProps) => {
     deletePost,
     getPost,
     updatePost,
+    getPosts,
+    allPosts,
   };
   return (
     <PostContext.Provider value={contextValue}>{children}</PostContext.Provider>
