@@ -15,6 +15,7 @@ export interface PostContextValue {
   getPosts: () => Promise<void>;
   deletePost: (id: string) => Promise<void>;
   getPost: (id: string) => Promise<void>;
+  getPostsCategory: (category: string) => Promise<void>;
 }
 
 
@@ -22,3 +23,9 @@ export interface VideoHeightContextValue {
   videoHeight: number;
   setVideoHeight: (height: number) => void;
 }
+
+export interface CategoryContextValue {
+  categories: object[];
+  getCategories: () => Promise<void>;
+}
+

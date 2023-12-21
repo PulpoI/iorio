@@ -7,6 +7,7 @@ import {
   getPostRequest,
   updatePostsRequest,
   getPostsRequest,
+  getPostsCategoryRequest,
 } from "../services/posts";
 import { useAuth } from "./AuthContext";
 import Cookies from "js-cookie";
@@ -16,6 +17,7 @@ const PostContext = createContext<PostContextValue>({
   posts: [],
   createPost: async () => {},
   getPostsUser: async () => {},
+  getPostsCategory: async () => {},
   deletePost: async () => {},
   getPost: async () => {},
 });
@@ -94,10 +96,20 @@ export const PostProvider = ({ children }: AuthProviderProps) => {
       console.log(error);
     }
   };
+
+  const getPostsCategory = async (categoryId) => {
+    try {
+      const res = await getPostsCategoryRequest(categoryId);
+      setPosts(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const contextValue: PostContextValue = {
     posts,
     createPost,
     getPostsUser,
+    getPostsCategory,
     deletePost,
     getPost,
     updatePost,

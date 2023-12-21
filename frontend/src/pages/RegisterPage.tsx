@@ -40,7 +40,7 @@ const RegisterPage = () => {
 
   return (
     <div className="flex bg-slate-950 bg-opacity-70 items-center justify-center h-screen">
-      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
+      <div className="bg-slate-950 bg-opacity-80 max-w-md w-full p-10 rounded-md">
         {registerErrors.length > 0 && (
           <div className="bg-red-500 p-2 text-white">{registerErrors}</div>
         )}
@@ -76,7 +76,7 @@ const RegisterPage = () => {
           <button type="submit">Registrarme</button>
         </form>
         <p>
-          Ya tenés una cuenta? <Link to={"/login"}>Registrate</Link>
+          Ya tenés una cuenta? <Link to={"/login"}>Inicia sesión</Link>
         </p>
       </div>
       {/* <YouTube

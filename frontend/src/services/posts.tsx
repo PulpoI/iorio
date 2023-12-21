@@ -66,3 +66,15 @@ export const getPostsRequest = async () => {
     throw new Error("Failed to fetch data");
   }
 };
+
+export const getPostsCategoryRequest = async (categoryId) => {
+  try {
+    const response = await fetch(API + `/content?category=${categoryId}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch data");
+  }
+};

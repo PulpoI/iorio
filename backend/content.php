@@ -37,6 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     header('Content-Type: application/json');
     echo json_encode($contentData);
     http_response_code(200);
+  } else if (isset($_GET['category'])) {
+    $categoryId = $_GET['category'];
+    $contentData = $_content->getContentCategory($categoryId);
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+    header("Access-Control-Allow-Methods: GET");
+    header("Allow:  GET");
+    header('Content-Type: application/json');
+    echo json_encode($contentData);
+    http_response_code(200);
   } else {
     $_responses->error_400();
   }

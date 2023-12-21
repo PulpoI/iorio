@@ -1,17 +1,31 @@
 import { useEffect } from "react";
 import { useVideoHeight } from "../context/VideoHeightContext";
 import { usePosts } from "../context/PostsContext";
+import { useCategories } from "../context/CategoriesContext";
 
-import imgHero from "../assets/img/hero-7.jpg";
+import fotoTatuajes from "../assets/img/tatuajes/1.jpg";
+import fotoEntrevistas from "../assets/img/entrevistas/1.jpg";
+import fotoAnecdotas from "../assets/img/anecdotas/1.webp";
+import fotoRecitales from "../assets/img/recitales/1.webp";
+import fotoDibujos from "../assets/img/dibujos/4.jpg";
+import fotoBiografias from "../assets/img/biografia/2.jpg";
+import fotoEntradas from "../assets/img/entradas/3.jpg";
+import fotoCanciones from "../assets/img/canciones/1.jpg";
+import fotoHistorias from "../assets/img/historias/1.jpg";
+import fotoFrases from "../assets/img/frases/1.jpg";
+import fotoReferencias from "../assets/img/referencias/1.jpg";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const { videoHeight } = useVideoHeight();
-
   const { getPosts, allPosts } = usePosts();
+  const { getCategories, categories } = useCategories();
 
   useEffect(() => {
     getPosts();
+    getCategories();
   }, []);
+
   return (
     <>
       {/* <section
@@ -32,15 +46,17 @@ const HomePage = () => {
       <section className="flex justify-center items-center flex-col bg-slate-950 bg-opacity-80">
         <div className="h-screen w-full  flex flex-col items-center justify-center container mx-5 gap-5">
           <h1>Ricardo Iorio</h1>
-          <h2 className="italic max-w-2xl text-center ">
+          <h2
+            className="italic max-w-2xl text-center "
+            style={{ fontFamily: "'Nothing You Could Do', cursive" }}
+          >
             "Son todos aparatos que median entre la realidad del hombre y la
             vida real"
           </h2>
         </div>
       </section>
-      <div className="flex max-w-5xl gap-4 flex-wrap">
-        <h2>Posts</h2>
-        {allPosts.map((post) => (
+      <div className="flex gap-4 flex-wrap flex-col bg-slate-950 bg-opacity-80">
+        {/* {allPosts.map((post) => (
           <div key={post.id}>
             <h3>{post.titulo}</h3>
             <p>{post.descripcion}</p>
@@ -52,7 +68,54 @@ const HomePage = () => {
               alt=""
             />
           </div>
-        ))}
+        ))} */}
+
+        <div className="flex flex-wrap">
+          {categories.map((category) => (
+            <Link
+              to={`/${category.id}/${category.nombre.toLowerCase()}`}
+              key={category.id}
+              className="flex justify-center w-1/3 h-80"
+            >
+              <div
+                className="w-full b-full bg-center bg-cover rounded-sm"
+                style={{
+                  backgroundImage:
+                    category.nombre === "Tatuajes"
+                      ? `url(${fotoTatuajes})`
+                      : category.nombre === "Entrevistas"
+                      ? `url(${fotoEntrevistas})`
+                      : category.nombre === "Anecdotas"
+                      ? `url(${fotoAnecdotas})`
+                      : category.nombre === "Recitales"
+                      ? `url(${fotoRecitales})`
+                      : category.nombre === "Dibujos"
+                      ? `url(${fotoDibujos})`
+                      : category.nombre === "Biografía"
+                      ? `url(${fotoBiografias})`
+                      : category.nombre === "Entradas"
+                      ? `url(${fotoEntradas})`
+                      : category.nombre === "Canciones"
+                      ? `url(${fotoCanciones})`
+                      : category.nombre === "Historias"
+                      ? `url(${fotoHistorias})`
+                      : category.nombre === "Frases"
+                      ? `url(${fotoFrases})`
+                      : category.nombre === "Referencias"
+                      ? `url(${fotoReferencias})`
+                      : "",
+                }}
+              >
+                <div className="flex justify-center items-center w-full h-full bg-slate-950 bg-opacity-90">
+                  <h3 className="text-5xl">{category.nombre}</h3>
+                  {/* <div>
+                    <p>{category.descripcion}</p>
+                  </div> */}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );

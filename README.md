@@ -24,9 +24,12 @@ Usuarios registrados podran subir contenido acerca del artista.
 
 #### Formulario de contacto
 
-Home:
-Hero:
+#### Grid de categorias en Home
 
+#### Estructura de la Home
+
+- Nav
+- Hero
 - 1ra seccion con info acerca del sitio
 - Muro de publicaciones de usuarios
 

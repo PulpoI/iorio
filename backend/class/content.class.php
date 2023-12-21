@@ -44,6 +44,13 @@ class Content extends Users
     return $data;
   }
 
+  public function getContentCategory($id)
+  {
+    $query = "SELECT id, usuario_id, categoria_id, titulo, descripcion, tipo_contenido, contenido, estado, fecha_subida FROM " . $this->table . " WHERE categoria_id = $id";
+    $data = parent::getData($query);
+    return $data;
+  }
+
   // POST
   public function postContent($json)
   {
