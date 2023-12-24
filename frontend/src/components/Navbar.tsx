@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+
 import logo from "../assets/img/logo.jpg";
 import imgHero from "../assets/img/hero-7.jpg";
 
@@ -45,6 +47,9 @@ const Navbar = () => {
             <>
               <li>Bienvenido {user.nombre}</li>
               <li>
+                <Link to="#" className="bg-yellow-500 px-4 py-1 rounder-sm">
+                  Categorias
+                </Link>
                 <Link
                   to="/mis-posts"
                   className="bg-yellow-500 px-4 py-1 rounder-sm"
@@ -73,6 +78,17 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <li>
+                <ScrollLink
+                  to="seccionEspecifica"
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                >
+                  Categorías
+                </ScrollLink>
+              </li>
               <li>
                 <Link
                   to="/login"

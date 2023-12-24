@@ -55,7 +55,10 @@ const HomePage = () => {
           </h2>
         </div>
       </section>
-      <div className="flex gap-4 flex-wrap flex-col bg-slate-950 bg-opacity-80">
+      <div
+        id="categoryHome"
+        className="flex gap-4 flex-wrap flex-col bg-slate-950 bg-opacity-80"
+      >
         {/* {allPosts.map((post) => (
           <div key={post.id}>
             <h3>{post.titulo}</h3>
@@ -71,6 +74,7 @@ const HomePage = () => {
         ))} */}
 
         <div className="flex flex-wrap">
+          <div id="seccionEspecifica"> </div>
           {categories.map((category) => (
             <Link
               to={`/${category.id}/${category.nombre.toLowerCase()}`}
@@ -106,11 +110,13 @@ const HomePage = () => {
                       : "",
                 }}
               >
-                <div className="flex justify-center items-center w-full h-full bg-slate-950 bg-opacity-90">
+                <div className="flex justify-center items-center flex-col w-full h-full bg-slate-950 bg-opacity-90">
                   <h3 className="text-5xl">{category.nombre}</h3>
-                  {/* <div>
-                    <p>{category.descripcion}</p>
-                  </div> */}
+                  <div>
+                    <p className="px-10 pt-4 d-none  hover:inline-flex">
+                      {category.descripcion}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>
