@@ -113,9 +113,9 @@ const HomePage = () => {
                 <div className="flex justify-center items-center flex-col w-full h-full bg-slate-950 bg-opacity-90">
                   <h3 className="text-5xl">{category.nombre}</h3>
                   <div>
-                    <p className="px-10 pt-4 d-none  hover:inline-flex">
+                    {/* <p className="px-10 pt-4 d-none  hover:inline-flex">
                       {category.descripcion}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>

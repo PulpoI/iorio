@@ -3,7 +3,7 @@
 ## Blog de seguidores de Ricardo Iorio -
 
 Blog de contenido de seguidores de Ricaro Iorio.
-Usuarios registrados podran subir contenido acerca del artista.
+Usuarios registrados podran subir contenido acerca del artista ordenado por categorías.
 
 ### Tecnología utilizada -
 
@@ -20,7 +20,12 @@ Usuarios registrados podran subir contenido acerca del artista.
 - PHP (POO)
 - MySQL (phpMyAdmin)
 
-### Funciones a desarrollar:
+#### Otros:
+
+- Git
+- Github
+
+### Funciones a desarrollar FRONT:
 
 #### Formulario de contacto
 
@@ -35,5 +40,10 @@ Usuarios registrados podran subir contenido acerca del artista.
 
 ### Funciones extras:
 
-- "Me gusta" en posts (Esto puede servir para ordenar contenido con mas relevancia)
-- "Canciones + votadas para reproducirse al navegar la web"
+- "Votos" en posts y comentarios (Esto puede servir para ordenar contenido con mas relevancia)
+- "Canciones más votadas para reproducirse al navegar la web"
+
+### Project:
+
+- Para escalar el proyecto empece a crear issues y organizar el desarrollo.
+- https://github.com/users/PulpoI/projects/6/views/1

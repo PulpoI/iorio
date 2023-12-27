@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import YouTube, { YouTubeProps } from "react-youtube";
+import Input from "../components/ui/Input";
+import { ButtonAuth } from "../components/ui/ButtonAuth";
 
 const RegisterPage = () => {
   const {
@@ -46,34 +48,46 @@ const RegisterPage = () => {
         )}
         <h1>Registrarse</h1>
         <form onSubmit={onSubmit}>
-          <input
+          <Input
             type="text"
-            {...register("nombre", { required: true })}
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+            name="nombre"
+            register={register}
             placeholder="Nombre de usuario"
+            errors={errors}
+            validationSchema={{
+              required: "El nombre es requerido",
+            }}
+            required
+            label={""}
           />
-          {errors.nombre && (
-            <p className="text-red-500">El nombre es requerido</p>
-          )}
-          <input
+
+          <Input
             type="email"
-            {...register("correo", { required: true })}
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+            name="correo"
+            register={register}
             placeholder="Correo electrónico"
+            errors={errors}
+            validationSchema={{
+              required: "El correo es requerido",
+            }}
+            required
+            label={""}
           />
-          {errors.correo && (
-            <p className="text-red-500">El correo es requerido</p>
-          )}
-          <input
+
+          <Input
             type="password"
-            {...register("contraseña", { required: true })}
-            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+            name="contraseña"
+            register={register}
             placeholder="Contraseña"
+            errors={errors}
+            validationSchema={{
+              required: "La contraseña es requerida",
+            }}
+            required
+            label={""}
           />
-          {errors.contraseña && (
-            <p className="text-red-500">La contraseña es requerida</p>
-          )}
-          <button type="submit">Registrarme</button>
+          <ButtonAuth type="submit">Registrarme</ButtonAuth>
+          {/* <button type="submit">Registrarme</button> */}
         </form>
         <p>
           Ya tenés una cuenta? <Link to={"/login"}>Inicia sesión</Link>
