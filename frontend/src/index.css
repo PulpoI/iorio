@@ -35,3 +35,16 @@ main {
   z-index: 1;
   position: relative;
 }
+
+@keyframes rotateAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotated-element {
+  animation: rotateAnimation 3s linear infinite; /* Aplica la animación durante 3 segundos en un bucle infinito */
+}

@@ -43,9 +43,9 @@ const HomePage = () => {
           </div>
         </div>
       </section> */}
-      <section className="flex justify-center items-center flex-col bg-slate-950 bg-opacity-80">
+      <section className="flex justify-center items-center flex-col bg-slate-950 bg-opacity-90">
         <div className="h-screen w-full  flex flex-col items-center justify-center container mx-5 gap-5">
-          <h1>Ricardo Iorio</h1>
+          <h1>Homenaje</h1>
           <h2
             className="italic max-w-2xl text-center "
             style={{ fontFamily: "'Nothing You Could Do', cursive" }}
