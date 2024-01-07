@@ -7,7 +7,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import fotoIcon from "../assets/img/foto-icon.jpg";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
+  { name: "Mis posts", href: "mis-posts", current: false },
   { name: "Team", href: "#", current: false },
   { name: "Projects", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
@@ -19,13 +19,6 @@ function classNames(...classes) {
 
 import logo from "../assets/img/logo.png";
 
-import imgHero from "../assets/img/hero-7.jpg";
-import imgHero1 from "../assets/img/hero-1.jpg";
-import imgHero2 from "../assets/img/hero-2.jpg";
-import imgHero3 from "../assets/img/hero-3.jpg";
-import imgHero4 from "../assets/img/hero-4.jpg";
-import imgHero5 from "../assets/img/hero-5.jpg";
-import imgHero6 from "../assets/img/hero-6.jpg";
 import { useEffect, useState } from "react";
 import { ButtonNavYellow } from "./ui/ButtonNavYellow";
 
@@ -33,16 +26,7 @@ const Navbar = () => {
   const videoHero = "../../public/donde-naci-alta.mp4";
   const video = document.querySelector("video");
   const { isAuthenticated, logout, user } = useAuth();
-  const [imageHero, setImageHero] = useState(imgHero);
-  const images = [imgHero, imgHero1, imgHero2, imgHero3, imgHero4, imgHero5];
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const changeImageHero = () => {
-    const nextIndex = (currentIndex + 1) % images.length;
-    const nextImage = images[nextIndex];
-    setImageHero(nextImage);
-    setCurrentIndex(nextIndex);
-  };
+  const [currentPage, setCurrentPage] = useState("Home");
 
   const [addBg, setAddBg] = useState(false);
   const handleScroll = () => {
@@ -54,19 +38,10 @@ const Navbar = () => {
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      changeImageHero();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex]);
 
   const handleSoundVideo = () => {
     if (video.muted) {
@@ -75,18 +50,6 @@ const Navbar = () => {
       video.muted = true;
     }
   };
-  // const video = document.querySelector("video");
-  // useEffect(() => {
-  //   if (video) {
-  //     setVideoHeight(video.clientHeight);
-  //   }
-  // }, []);
-  // window.addEventListener("resize", () => {
-  //   setVideoHeight(video?.clientHeight);
-  // });
-
-  // get width of window
-  // const width = window.innerWidth;
 
   return (
     <>
@@ -132,9 +95,9 @@ const Navbar = () => {
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
-                          href={item.href}
+                          to={item.href}
                           className={classNames(
                             item.current
                               ? "bg-gray-900 text-white"
@@ -144,7 +107,7 @@ const Navbar = () => {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -186,15 +149,15 @@ const Navbar = () => {
                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                to="/mis-posts"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Your Profile
-                              </a>
+                                Mis posts
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
@@ -206,7 +169,7 @@ const Navbar = () => {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Settings
+                                Mi perfil
                               </a>
                             )}
                           </Menu.Item>
@@ -268,28 +231,6 @@ const Navbar = () => {
           </>
         )}
       </Disclosure>
-
-      <section
-        className="bg-cover bg-top bg-fixed overflow-hidden"
-        // style={{ marginTop: `${videoHeight + 72}px` }}
-        // style={{ backgroundImage: `url(${imgHero})` }}
-      >
-        <div className="flex justify-center bg-slate-950 bg-opacity-80 h-0">
-          <div
-            className="w-full absolute h-screen bg-cover bg-top bg-fixed"
-            style={{ backgroundImage: `url(${imageHero})` }}
-          ></div>
-        </div>
-      </section>
-
-      {/* Video */}
-      {/* <section className="overflow-hidden ">
-        <div className="w-screen opacity-80 h-0">
-          <video className="w-screen absolute" loop autoPlay muted>
-            <source src={videoHero} type="video/mp4"></source>
-          </video>
-        </div>
-      </section> */}
     </>
   );
 };

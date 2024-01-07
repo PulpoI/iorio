@@ -15,6 +15,7 @@ import fotoHistorias from "../assets/img/historias/1.jpg";
 import fotoFrases from "../assets/img/frases/1.jpg";
 import fotoReferencias from "../assets/img/referencias/1.jpg";
 import { Link } from "react-router-dom";
+import { Hero } from "../components/Hero";
 
 const HomePage = () => {
   const { videoHeight } = useVideoHeight();
@@ -43,18 +44,9 @@ const HomePage = () => {
           </div>
         </div>
       </section> */}
-      <section className="flex justify-center items-center flex-col bg-slate-950 bg-opacity-90">
-        <div className="h-screen w-full  flex flex-col items-center justify-center container mx-5 gap-5">
-          <h1>Homenaje</h1>
-          <h2
-            className="italic max-w-2xl text-center "
-            style={{ fontFamily: "'Nothing You Could Do', cursive" }}
-          >
-            "Son todos aparatos que median entre la realidad del hombre y la
-            vida real"
-          </h2>
-        </div>
-      </section>
+
+      <Hero />
+
       <div
         id="categoryHome"
         className="flex gap-4 flex-wrap flex-col bg-slate-950 bg-opacity-80"

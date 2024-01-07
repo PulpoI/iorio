@@ -11,23 +11,28 @@ const CategoryPosts = () => {
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    if (category_id) {
-      getPostsCategory(category_id);
+    setTimeout(() => {
+      if (category_id) {
+        getPostsCategory(category_id);
+      }
       setLoader(false);
-    }
+    }, 200);
   }, [category_id, getPostsCategory]);
 
   return (
     <>
-      {loader ? <Loader /> : null}
-      <div>
-        <h1>Category: {category}</h1>
-        <ul>
-          {posts.map((post) => (
-            <PostCard post={post} key={post.id} />
-          ))}
-        </ul>
-      </div>
+      {loader ? (
+        <Loader />
+      ) : (
+        <div>
+          <h1>Category: {category}</h1>
+          <div className="h-screen">
+            {posts.map((post) => (
+              <PostCard post={post} key={post.id} />
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -13,6 +13,7 @@ import {
 } from "../services/auth";
 import { AuthContextValue } from "./types";
 import Cookies from "js-cookie";
+import { useLoader } from "./LoaderContext";
 // import { set } from "react-hook-form";
 
 export const AuthContext = createContext<AuthContextValue>({
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { isLoading, showLoader, hideLoader } = useLoader();
 
   const signup = async (user: object) => {
     try {
@@ -63,10 +65,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const res = await loginRequest(user);
       if (res.status !== "error") {
+        hideLoader();
         setUser(res.result);
         setIsAuthenticated(true);
         Cookies.set("user", res.result.token, { expires: 365 });
       } else {
+        hideLoader();
         setErrors(res.result.error_msg);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
